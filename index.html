@@ -6,36 +6,66 @@
 <title>Service Selection</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
-body{background:#151912;color:#FFF6F7;line-height:1.5;overflow-x:hidden;}
-header{display:flex;justify-content:flex-start;align-items:center;padding:1rem 2rem;background:#10120f;position:fixed;width:100%;top:0;z-index:100;}
-header button{background:none;border:none;color:#FFF6F7;font-size:1.5rem;cursor:pointer;}
-main{display:flex;flex-direction:column;align-items:center;padding-top:80px;}
-.section{width:100%;min-height:30vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:2rem;}
+
+body{
+background:#151912;
+color:#FFF6F7;
+line-height:1.5;
+overflow-x:hidden;
+
+}
+
+header{
+display:flex;
+justify-content:flex-start;
+align-items:center;
+padding:1rem 2rem;
+background:#10120f;
+position:fixed;width:100%;
+top:0;z-index:100;
+
+}
+
+header button{
+background:none;
+border:none;
+color:#FFF6F7;
+font-size:1.5rem;
+cursor:pointer;
+
+}
+
+main{
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:80px;
+
+}
+
+.section{
+width:100%;
+min-height:30vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+padding:2rem;
+
+}
 
 .services {
   flex-direction: column;
 }
 
-@media(max-width:600px){
-  .services {
-    flex-direction: row;
-    flex-wrap: nowrap;  
-    justify-content: center;
-    gap: 0.8rem;        
-    overflow-x: auto;   
-  }
-  .service-btn {
-    width: auto;         
-    flex: 0 0 auto;      
-  }
-}
 
 .service-btn{
 background:#28a745;
 color:#FFF6F7;
 border:none;
-padding:1.2rem 1.6rem;
-font-size:1.05rem;
+padding:1.2rem 1rem;
+font-size:1rem;
 cursor:pointer;
 border-radius:8px;
 position:relative;
@@ -72,7 +102,7 @@ position:relative;z-index:10;
 .form-container button:hover{background:#28a745;color:#FFF6F7;}
 .thankyou{display:none;margin-top:1rem;color:rgb(160,255,255);}
 .info{margin-top:4rem;max-width:800px;text-align:center;color:#cfcfcf;}
-@media(max-width:600px){.services{flex-direction:column;gap:0.8rem;}.service-btn{width:80%;}}
+@media(max-width:600px){.services{flex-direction:column;gap:0.8rem;}.service-btn{width:30%;}}
 /* --- NEON CYBER SLIDERS --- */
 
 .slider-container input[type="range"] {

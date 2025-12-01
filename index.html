@@ -11,8 +11,18 @@ header{display:flex;justify-content:flex-start;align-items:center;padding:1rem 2
 header button{background:none;border:none;color:#FFF6F7;font-size:1.5rem;cursor:pointer;}
 main{display:flex;flex-direction:column;align-items:center;padding-top:80px;}
 .section{width:100%;min-height:30vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:2rem;}
-.services{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem;}
-.service-btn{background:#28a745;color:#FFF6F7;border:none;padding:1.2rem 1.6rem;font-size:1.05rem;cursor:pointer;border-radius:8px;position:relative;z-index:10;}
+@media(max-width:600px){
+  .services {
+    flex-direction: row;   /* Горизонтально вместо вертикально */
+    gap: 0.8rem;
+    overflow-x: auto;      /* Позволяет прокручивать по горизонтали */
+    padding: 0 1rem;       /* Немного отступов слева и справа */
+  }
+  .service-btn {
+    flex: 0 0 auto;        /* Чтобы кнопки не растягивались */
+    width: auto;           /* Ширина по контенту */
+  }
+}.service-btn{background:#28a745;color:#FFF6F7;border:none;padding:1.2rem 1.6rem;font-size:1.05rem;cursor:pointer;border-radius:8px;position:relative;z-index:10;}
 .service-btn:hover{background:#28a745;color:#FFF6F7;}
 .form-container{display:flex;flex-direction:column;background:#202420;padding:2rem;border-radius:12px;max-width:400px;width:90%;margin-top:2rem;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity 0.6s ease,transform 0.6s ease;position:relative;z-index:10;}
 .form-container.active{opacity:1;transform:translateY(0);pointer-events:auto;}
@@ -43,12 +53,12 @@ main{display:flex;flex-direction:column;align-items:center;padding-top:80px;}
   border-radius: 5px;
 }
 
-/* —— BRIGHT NEON GLOW WHILE ACTIVATING —— */
+/* GLOW ACTIVATING */
 .slider-container input[type="range"]:active {
   filter: drop-shadow(0 0 6px #28ff6f);
 }
 
-/* Chrome / Edge / Safari thumb */
+/* Chrome / Edge / Safari */
 .slider-container input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -95,7 +105,7 @@ main{display:flex;flex-direction:column;align-items:center;padding-top:80px;}
     inset 0 0 8px #0f5;
 }
 
-/* Active glow pulse */
+/* Active glow */
 .slider-container input[type="range"]::-webkit-slider-thumb:active {
   transform: scale(1.25);
   box-shadow:
@@ -223,7 +233,7 @@ canvas#neuro{position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointe
 </section>
 </main>
 
-<!-- ORIGINAL SHADER CODE (unchanged) -->
+
 <script type="x-shader/x-vertex" id="vertShader">
 precision mediump float;
 attribute vec2 a_position;
@@ -243,7 +253,7 @@ void main(){vec2 uv=0.5*vUv;uv.x*=u_ratio;vec2 pointer=vUv-u_pointer_position;po
 </script>
 
 <script>
-// === SHADER BACKGROUND (UNCHANGED) ===
+
 const canvasEl=document.getElementById("neuro");
 const gl=canvasEl.getContext("webgl")||canvasEl.getContext("experimental-webgl");
 let uniforms={},pointer={x:0,y:0,tX:0,tY:0},devicePixelRatio=Math.min(window.devicePixelRatio,2);
@@ -283,7 +293,7 @@ function render(){
 }
 render();
 
-// === FORM LOGIC ===
+
 
 const serviceBtns=document.querySelectorAll('.service-btn');
 const formContainer=document.getElementById('serviceForm');

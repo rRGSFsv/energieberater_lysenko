@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Selection</title>
+<style>
+/* Reset */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
+body { background:#151912; color:#FFF6F7; line-height:1.5; overflow-x:hidden; }
+
+/* Header */
+header {
+  display:flex; justify-content:flex-start; align-items:center; padding:1rem 2rem;
+  background:#10120f; position:fixed; width:100%; top:0; z-index:100;
+}
+header button { 
+  background:none; border:none; color:#FFF6F7; font-size:1.5rem; cursor:pointer; 
+}
+
+/* Main */
+main { display:flex; flex-direction:column; align-items:center; padding-top:80px; }
+
+/* Sections */
+.section { width:100%; min-height:30vh; display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; padding:2rem; }
+
+.services { 
+  display:flex; 
+  gap:1rem; /* уменьшенные отступы */
+  flex-wrap:wrap; 
+  justify-content:center; 
+  margin-top:2rem; 
+}
+.service-btn { 
+  background:#28a745; /* зелёный */
+  color:#FFF6F7; 
+  border:none; 
+  padding:1.2rem 1.6rem; 
+  font-size:1.05rem; 
+  cursor:pointer; 
+  border-radius:8px; 
+  transition:none; 
+  position:relative; 
+  z-index:10;
+}
+.service-btn:hover { background:#28a745; color:#FFF6F7; }
+
+/* Form */
+.form-container {
+  display: flex;
+  flex-direction: column;
+  background: #202420;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  margin-top: 2rem;
+
+  /* плавное появление */
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.form-container.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.form-container input, .form-container select, .form-container textarea {
+  width:100%; padding:0.8rem; margin-bottom:1rem; border:none; border-radius:6px; font-size:1rem;
+  background: #111310; color: #fff;
+}
+.form-container label { color: #cfcfcf; font-size:0.9rem; margin-bottom:0.2rem; display:block; }
+
+.form-container button {
+  background:#28a745; color:#FFF6F7; border:none; padding:1rem; border-radius:6px; cursor:pointer; font-size:1rem;
+}
+.form-container button:hover { background:#28a745; color:#FFF6F7; }
+
+.thankyou { display:none; margin-top:1rem; color:rgb(160,255,255); }
+
+.info { margin-top:4rem; max-width:800px; text-align:center; color:#cfcfcf; }
+
+@media(max-width:600px){
+  .services { flex-direction:column; gap:0.8rem; }
+  .service-btn { width:80%; }
+}
+canvas#neuro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+</style>
+</head>
+<body>
+
+<header>
+  <button onclick="scrollToTop()">HOME</button>
+</header>
+
+<canvas id="neuro"></canvas>
+
+<main>
+  <section class="section hero">
+    <h1>Wähle eine Dienstleistung</h1>
+    <div class="services">
+      <button class="service-btn" data-service="Vertrag wechseln">Vertrag wechseln</button>
+      <button class="service-btn" data-service="Umzug">Umzug</button>
+      <button class="service-btn" data-service="Neueinzug">Neueinzug</button>
+    </div>
+  </section>
+
+  <section class="section form-section">
+    <div class="form-container" id="serviceForm">
+      <h2 id="formTitle">Dienstleistung auswählen</h2>
+      <!-- Заменил action на Web3Forms и добавил access_key -->
+      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+        <!-- Web3Forms access key -->
+        <input type="hidden" name="access_key" value="03e1eca5-ec17-42d5-9603-e65f251920d3">
+
+        <input type="text" name="name" placeholder="Dein Name" required>
+        <input type="email" name="email" placeholder="Deine E-Mail" required>
+        <input type="text" name="phone" placeholder="Telefon / WhatsApp" required>
+
+        <label for="contact_method">Bevorzugte Kontaktmethode:</label>
+        <select name="contact_method" id="contact_method" required>
+          <option value="WhatsApp">WhatsApp</option>
+          <option value="Telephonisch">Telephonisch</option>
+        </select>
+
+        <label for="language">Sprache / Language:</label>
+        <select name="language" id="language" required>
+          <option value="Deutsch">Deutsch</option>
+          <option value="English">English</option>
+          <option value="Українська">Українська</option>
+          <option value="Русский">Русский</option>
+        </select>
+
+        <!-- скрытое поле с выбранной услугой -->
+        <input type="hidden" name="service" id="selectedService" value="">
+
+        <button type="submit">Absenden</button>
+      </form>
+      <div class="thankyou" id="thankyouMsg">Danke! Wir werden uns bald bei dir melden.</div>
+      <div class="thankyou" id="errorMsg" style="display:none; color:#ff8b8b;">Fehler beim Senden. Bitte versuche es erneut.</div>
+    </div>
+  </section>
+
+  <section class="section info">
+    <h2>Über Uns</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et lorem nec libero efficitur varius.</p>
+  </section>
+</main>
+
+<script type="x-shader/x-vertex" id="vertShader">
+precision mediump float;
+attribute vec2 a_position;
+varying vec2 vUv;
+void main() {
+  vUv = .5 * (a_position + 1.0);
+  gl_Position = vec4(a_position, 0.0, 1.0);
+}
+</script>
+
+<script type="x-shader/x-fragment" id="fragShader">
+precision mediump float;
+varying vec2 vUv;
+uniform float u_time;
+uniform vec2 u_pointer_position;
+uniform float u_ratio;
+
+vec2 rotate(vec2 uv, float th) {
+  return mat2(cos(th), sin(th), -sin(th), cos(th)) * uv;
+}
+
+float neuro_shape(vec2 uv, float t, float p) {
+  vec2 sine_acc = vec2(0.0);
+  vec2 res = vec2(0.0);
+  float scale = 8.0;
+  for(int j=0;j<15;j++){
+    uv = rotate(uv, 1.0);
+    sine_acc = rotate(sine_acc, 1.0);
+    vec2 layer = uv*scale + float(j) + sine_acc - t;
+    sine_acc += sin(layer)+2.4*p;
+    res += (0.5+0.5*cos(layer))/scale;
+    scale *= 1.2;
+  }
+  return res.x + res.y;
+}
+
+void main(){
+  vec2 uv = 0.5*vUv;
+  uv.x *= u_ratio;
+  vec2 pointer = vUv - u_pointer_position;
+  pointer.x *= u_ratio;
+  float p = clamp(length(pointer),0.0,1.0);
+  p = 0.5*pow(1.0-p,2.0);
+  float t = 0.001*u_time;
+  vec3 color = vec3(0.0,0.5,0.2); // фиксированный тёмно-зелёный
+  float noise = neuro_shape(uv,t,p);
+  noise = 1.2*pow(noise,3.0);
+  noise += pow(noise,10.0);
+  noise = max(0.0,noise-0.5);
+  noise *= (1.0-length(vUv-0.5));
+  color = color*noise;
+  gl_FragColor = vec4(color,1.0);
+}
+</script>
+
+<script>
+/* === Neuro Shader === */
+const canvasEl=document.getElementById("neuro");
+const gl=canvasEl.getContext("webgl")||canvasEl.getContext("experimental-webgl");
+let uniforms={};
+let pointer={x:0,y:0,tX:0,tY:0};
+const devicePixelRatio=Math.min(window.devicePixelRatio,2);
+
+function initShader(){
+  const vsSource=document.getElementById("vertShader").textContent;
+  const fsSource=document.getElementById("fragShader").textContent;
+  function createShader(gl,source,type){
+    const shader=gl.createShader(type);
+    gl.shaderSource(shader,source);
+    gl.compileShader(shader);
+    if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(shader));
+    return shader;
+  }
+  const vertexShader=createShader(gl,vsSource,gl.VERTEX_SHADER);
+  const fragmentShader=createShader(gl,fsSource,gl.FRAGMENT_SHADER);
+  const program=gl.createProgram();
+  gl.attachShader(program,vertexShader);
+  gl.attachShader(program,fragmentShader);
+  gl.linkProgram(program);
+  gl.useProgram(program);
+  const vertices=new Float32Array([-1,-1,1,-1,-1,1,1,1]);
+  const vertexBuffer=gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer);
+  gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
+  const positionLocation=gl.getAttribLocation(program,"a_position");
+  gl.enableVertexAttribArray(positionLocation);
+  gl.vertexAttribPointer(positionLocation,2,gl.FLOAT,false,0,0);
+  const uniformNames=["u_time","u_ratio","u_pointer_position"];
+  uniformNames.forEach(name=>{uniforms[name]=gl.getUniformLocation(program,name);});
+}
+initShader();
+
+function resizeCanvas(){
+  canvasEl.width=window.innerWidth*devicePixelRatio;
+  canvasEl.height=window.innerHeight*devicePixelRatio;
+  gl.viewport(0,0,canvasEl.width,canvasEl.height);
+  gl.uniform1f(uniforms.u_ratio,canvasEl.width/canvasEl.height);
+}
+window.addEventListener("resize",resizeCanvas);
+resizeCanvas();
+
+window.addEventListener("pointermove",e=>{pointer.tX=e.clientX;pointer.tY=e.clientY;});
+window.addEventListener("touchmove",e=>{pointer.tX=e.touches[0].clientX;pointer.tY=e.touches[0].clientY;});
+
+function render(){
+  pointer.x+=(pointer.tX-pointer.x)*0.2;
+  pointer.y+=(pointer.tY-pointer.y)*0.2;
+  gl.uniform1f(uniforms.u_time,performance.now());
+  gl.uniform2f(uniforms.u_pointer_position,pointer.x/window.innerWidth,1-pointer.y/window.innerHeight);
+  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+  requestAnimationFrame(render);
+}
+render();
+
+/* === Form Logic + Web3Forms === */
+const serviceButtons=document.querySelectorAll('.service-btn');
+const formContainer=document.getElementById('serviceForm');
+const formTitle=document.getElementById('formTitle');
+const selectedServiceInput=document.getElementById('selectedService');
+const contactForm=document.getElementById('contactForm');
+const thankyouMsg=document.getElementById('thankyouMsg');
+const errorMsg=document.getElementById('errorMsg');
+
+serviceButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const service=btn.dataset.service;
+    formTitle.textContent=`Du hast "${service}" gewählt`;
+    selectedServiceInput.value=service;
+    // Показываем форму (плавно)
+    formContainer.classList.add('active');
+    formContainer.scrollIntoView({behavior:'smooth'});
+    // Сбрасываем сообщения
+    thankyouMsg.style.display='none';
+    errorMsg.style.display='none';
+  });
+});
+
+contactForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  // Скрываем старые сообщения
+  thankyouMsg.style.display='none';
+  errorMsg.style.display='none';
+
+  const formData=new FormData(contactForm);
+
+  try{
+    const res=await fetch(contactForm.action, {
+      method: 'POST',
+      body: formData
+    });
+    const json = await res.json();
+    // Web3Forms возвращает success: true при успешной отправке
+    if(res.ok && json.success) {
+      contactForm.reset();
+      selectedServiceInput.value='';
+      thankyouMsg.style.display='block';
+    } else {
+      console.error('Web3Forms error response:', json);
+      errorMsg.style.display='block';
+    }
+  } catch(err){
+    console.error('Fetch error', err);
+    errorMsg.style.display='block';
+  }
+});
+
+function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+</script>
+
+</body>
+</html>

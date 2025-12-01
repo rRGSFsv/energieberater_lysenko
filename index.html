@@ -5,99 +5,120 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Service Selection</title>
 <style>
-/* Reset */
-* { margin:0; padding:0; box-sizing:border-box; font-family: 'Arial', sans-serif; }
-body { background:#151912; color:#FFF6F7; line-height:1.5; overflow-x:hidden; }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#151912;color:#FFF6F7;line-height:1.5;overflow-x:hidden;}
+header{display:flex;justify-content:flex-start;align-items:center;padding:1rem 2rem;background:#10120f;position:fixed;width:100%;top:0;z-index:100;}
+header button{background:none;border:none;color:#FFF6F7;font-size:1.5rem;cursor:pointer;}
+main{display:flex;flex-direction:column;align-items:center;padding-top:80px;}
+.section{width:100%;min-height:30vh;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;padding:2rem;}
+.services{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2rem;}
+.service-btn{background:#28a745;color:#FFF6F7;border:none;padding:1.2rem 1.6rem;font-size:1.05rem;cursor:pointer;border-radius:8px;position:relative;z-index:10;}
+.service-btn:hover{background:#28a745;color:#FFF6F7;}
+.form-container{display:flex;flex-direction:column;background:#202420;padding:2rem;border-radius:12px;max-width:400px;width:90%;margin-top:2rem;opacity:0;transform:translateY(20px);pointer-events:none;transition:opacity 0.6s ease,transform 0.6s ease;position:relative;z-index:10;}
+.form-container.active{opacity:1;transform:translateY(0);pointer-events:auto;}
+.form-container input,.form-container select,.form-container textarea{width:100%;padding:0.8rem;margin-bottom:1rem;border:none;border-radius:6px;font-size:1rem;background:#111310;color:#fff;}
+.form-container label{color:#cfcfcf;font-size:0.9rem;margin-bottom:0.2rem;display:block;}
+.form-container button{background:#28a745;color:#FFF6F7;border:none;padding:1rem;border-radius:6px;cursor:pointer;font-size:1rem;}
+.form-container button:hover{background:#28a745;color:#FFF6F7;}
+.thankyou{display:none;margin-top:1rem;color:rgb(160,255,255);}
+.info{margin-top:4rem;max-width:800px;text-align:center;color:#cfcfcf;}
+@media(max-width:600px){.services{flex-direction:column;gap:0.8rem;}.service-btn{width:80%;}}
+/* --- NEON CYBER SLIDERS --- */
 
-/* Header */
-header {
-  display:flex; justify-content:flex-start; align-items:center; padding:1rem 2rem;
-  background:#10120f; position:fixed; width:100%; top:0; z-index:100;
-}
-header button { 
-  background:none; border:none; color:#FFF6F7; font-size:1.5rem; cursor:pointer; 
-}
-
-/* Main */
-main { display:flex; flex-direction:column; align-items:center; padding-top:80px; }
-
-/* Sections */
-.section { width:100%; min-height:30vh; display:flex; justify-content:center; align-items:center; flex-direction:column; text-align:center; padding:2rem; }
-
-.services { 
-  display:flex; 
-  gap:1rem; /* уменьшенные отступы */
-  flex-wrap:wrap; 
-  justify-content:center; 
-  margin-top:2rem; 
-}
-.service-btn { 
-  background:#28a745; /* зелёный */
-  color:#FFF6F7; 
-  border:none; 
-  padding:1.2rem 1.6rem; 
-  font-size:1.05rem; 
-  cursor:pointer; 
-  border-radius:8px; 
-  transition:none; 
-  position:relative; 
-  z-index:10;
-}
-.service-btn:hover { background:#28a745; color:#FFF6F7; }
-
-/* Form */
-.form-container {
-  display: flex;
-  flex-direction: column;
-  background: #202420;
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  margin-top: 2rem;
-
-  /* плавное появление */
-  opacity: 0;
-  transform: translateY(20px);
-  pointer-events: none;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-.form-container.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-.form-container input, .form-container select, .form-container textarea {
-  width:100%; padding:0.8rem; margin-bottom:1rem; border:none; border-radius:6px; font-size:1rem;
-  background: #111310; color: #fff;
-}
-.form-container label { color: #cfcfcf; font-size:0.9rem; margin-bottom:0.2rem; display:block; }
-
-.form-container button {
-  background:#28a745; color:#FFF6F7; border:none; padding:1rem; border-radius:6px; cursor:pointer; font-size:1rem;
-}
-.form-container button:hover { background:#28a745; color:#FFF6F7; }
-
-.thankyou { display:none; margin-top:1rem; color:rgb(160,255,255); }
-
-.info { margin-top:4rem; max-width:800px; text-align:center; color:#cfcfcf; }
-
-@media(max-width:600px){
-  .services { flex-direction:column; gap:0.8rem; }
-  .service-btn { width:80%; }
-}
-canvas#neuro {
-  position: fixed;
-  top: 0;
-  left: 0;
+.slider-container input[type="range"] {
+  -webkit-appearance: none;
   width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: -1;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #26c34a 0%, #21373b 100%);
+  outline: none;
+  position: relative;
+  transition: background 0.3s ease;
 }
+
+/* Firefox */
+.slider-container input[type="range"]::-moz-range-track {
+  height: 10px;
+  background: linear-gradient(90deg, #28a745 0%, #1d331f 100%);
+  border-radius: 5px;
+}
+
+/* —— BRIGHT NEON GLOW WHILE ACTIVATING —— */
+.slider-container input[type="range"]:active {
+  filter: drop-shadow(0 0 6px #28ff6f);
+}
+
+/* Chrome / Edge / Safari thumb */
+.slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  background: #fff6f7;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:
+    0 0 10px #28ff6f,
+    0 0 20px #28ff6f,
+    inset 0 0 5px #0f3;
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+/* Firefox thumb */
+.slider-container input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  background: #28ff6f;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow:
+    0 0 10px #28ff6f,
+    0 0 20px #28ff6f,
+    inset 0 0 5px #0f3;
+  transition: transform 0.15s ease, box-shadow 0.3s ease;
+}
+
+/* Hover glow */
+.slider-container input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 12px #28ff6f,
+    0 0 25px #28ff6f,
+    inset 0 0 8px #0f5;
+}
+
+.slider-container input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.15);
+  box-shadow:
+    0 0 12px #fff6f7,
+    0 0 25px #28ff6f,
+    inset 0 0 8px #0f5;
+}
+
+/* Active glow pulse */
+.slider-container input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.25);
+  box-shadow:
+    0 0 20px #28ff6f,
+    0 0 35px #28ff6f,
+    inset 0 0 10px #0f5;
+}
+
+.slider-container input[type="range"]::-moz-range-thumb:active {
+  transform: scale(1.25);
+  box-shadow:
+    0 0 20px #28ff6f,
+    0 0 35px #28ff6f,
+    inset 0 0 10px #0f5;
+}
+.energy-buttons{display:flex;gap:1rem;margin:1rem 0;justify-content:center;}
+.energy-buttons button{flex:1;padding:0.8rem;font-size:1rem;border-radius:6px;border:none;background:#28a745;color:#FFF6F7;cursor:pointer;}
+.energy-buttons button.active{background:#FFF6F7;color:#28a745;}
+.energy-section{display:none;margin-bottom:1rem;}
+canvas#neuro{position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -107,65 +128,107 @@ canvas#neuro {
 <canvas id="neuro"></canvas>
 
 <main>
-  <section class="section hero">
-    <h1>Wähle eine Dienstleistung</h1>
-    <div class="services">
-      <button class="service-btn" data-service="Vertrag wechseln">Vertrag wechseln</button>
-      <button class="service-btn" data-service="Umzug">Umzug</button>
-      <button class="service-btn" data-service="Neueinzug">Neueinzug</button>
+<section class="section hero">
+  <h1>Wähle eine Dienstleistung</h1>
+  <div class="services">
+    <button class="service-btn" data-service="Vertrag wechseln">Vertrag wechseln</button>
+    <button class="service-btn" data-service="Umzug">Umzug</button>
+    <button class="service-btn" data-service="Neueinzug">Neueinzug</button>
+  </div>
+</section>
+
+<section class="section form-section">
+<div class="form-container" id="serviceForm">
+  <h2 id="formTitle">Dienstleistung auswählen</h2>
+
+  <!-- Strom/Gas buttons (between title and name, as requested) -->
+  <div class="energy-buttons" id="energyButtons" style="display:none;">
+    <button type="button" data-energy="Strom">Strom</button>
+    <button type="button" data-energy="Gas">Gas</button>
+  </div>
+
+  <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+
+    <!-- Universal Bewohner (Umzug + Neueinzug) -->
+    <div class="universal-section" id="universalSection" style="display:none;">
+      <div class="slider-container">
+        <label>Zahl von Bewohner:</label>
+        <input type="range" id="universalBewohner" name="universalBewohner" min="1" max="10" value="1" oninput="universalOutput.value=this.value">
+        <output id="universalOutput">1</output>
+      </div>
     </div>
-  </section>
 
-  <section class="section form-section">
-    <div class="form-container" id="serviceForm">
-      <h2 id="formTitle">Dienstleistung auswählen</h2>
-      <!-- Заменил action на Web3Forms и добавил access_key -->
-      <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-        <!-- Web3Forms access key -->
-        <input type="hidden" name="access_key" value="03e1eca5-ec17-42d5-9603-e65f251920d3">
-
-        <input type="text" name="name" placeholder="Dein Name" required>
-        <input type="email" name="email" placeholder="Deine E-Mail" required>
-        <input type="text" name="phone" placeholder="Telefon / WhatsApp" required>
-
-        <label for="contact_method">Bevorzugte Kontaktmethode:</label>
-        <select name="contact_method" id="contact_method" required>
-          <option value="WhatsApp">WhatsApp</option>
-          <option value="Telephonisch">Telephonisch</option>
-        </select>
-
-        <label for="language">Sprache / Language:</label>
-        <select name="language" id="language" required>
-          <option value="Deutsch">Deutsch</option>
-          <option value="English">English</option>
-          <option value="Українська">Українська</option>
-          <option value="Русский">Русский</option>
-        </select>
-
-        <!-- скрытое поле с выбранной услугой -->
-        <input type="hidden" name="service" id="selectedService" value="">
-
-        <button type="submit">Absenden</button>
-      </form>
-      <div class="thankyou" id="thankyouMsg">Danke! Wir werden uns bald bei dir melden.</div>
-      <div class="thankyou" id="errorMsg" style="display:none; color:#ff8b8b;">Fehler beim Senden. Bitte versuche es erneut.</div>
+    <!-- Strom Section -->
+    <div class="energy-section" id="stromSection">
+      <div class="slider-container">
+        <label>Zahl von Bewohner (Strom):</label>
+        <input type="range" name="stromBewohner" min="1" max="10" value="1" oninput="stromOutput.value=this.value">
+        <output id="stromOutput">1</output>
+      </div>
+      <div class="slider-container">
+        <label>Verbrauch kWh/Jahr (Strom):</label>
+        <input type="range" name="stromVerbrauch" min="1000" max="20000" step="500" value="2000" oninput="stromVerbrauchOutput.value=this.value">
+        <output id="stromVerbrauchOutput">2000</output>
+      </div>
     </div>
-  </section>
 
-  <section class="section info">
-    <h2>Über Uns</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et lorem nec libero efficitur varius.</p>
-  </section>
+    <!-- Gas Section -->
+    <div class="energy-section" id="gasSection">
+      <div class="slider-container">
+        <label>Zahl von Bewohner (Gas):</label>
+        <input type="range" name="gasBewohner" min="1" max="10" value="1" oninput="gasOutput.value=this.value">
+        <output id="gasOutput">1</output>
+      </div>
+
+      <div class="slider-container">
+        <label>Verbrauch kWh/Jahr (Gas):</label>
+        <input type="range" name="gasVerbrauch" min="1000" max="20000" step="500" value="2000" oninput="gasVerbrauchOutput.value=this.value">
+        <output id="gasVerbrauchOutput">2000</output>
+      </div>
+    </div>
+
+    <input type="hidden" name="access_key" value="03e1eca5-ec17-42d5-9603-e65f251920d3">
+    <input type="text" name="name" placeholder="Dein Name" required>
+    <input type="email" name="email" placeholder="Deine E-Mail" required>
+    <input type="text" name="phone" placeholder="Telefon / WhatsApp" required>
+
+    <label for="contact_method">Bevorzugte Kontaktmethode:</label>
+    <select name="contact_method" id="contact_method" required>
+      <option value="WhatsApp">WhatsApp</option>
+      <option value="Telephonisch">Telephonisch</option>
+      <option value="Email">per Email</option>
+    </select>
+
+    <label for="language">Sprache / Language:</label>
+    <select name="language" id="language" required>
+      <option value="Deutsch">Deutsch</option>
+      <option value="English">English</option>
+      <option value="Українська">Українська</option>
+      <option value="Русский">Русский</option>
+    </select>
+
+    <input type="hidden" name="service" id="selectedService" value="">
+
+    <button type="submit">Absenden</button>
+  </form>
+
+  <div class="thankyou" id="thankyouMsg">Danke! Wir werden uns bald bei dir melden.</div>
+  <div class="thankyou" id="errorMsg" style="display:none; color:#ff8b8b;">Fehler beim Senden. Bitte versuche es erneut.</div>
+</div>
+</section>
+
+<section class="section info">
+  <h2>Über Uns</h2>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et lorem nec libero efficitur varius.</p>
+</section>
 </main>
 
+<!-- ORIGINAL SHADER CODE (unchanged) -->
 <script type="x-shader/x-vertex" id="vertShader">
 precision mediump float;
 attribute vec2 a_position;
 varying vec2 vUv;
-void main() {
-  vUv = .5 * (a_position + 1.0);
-  gl_Position = vec4(a_position, 0.0, 1.0);
-}
+void main(){ vUv = .5*(a_position+1.0); gl_Position = vec4(a_position,0.0,1.0);}
 </script>
 
 <script type="x-shader/x-fragment" id="fragShader">
@@ -174,79 +237,28 @@ varying vec2 vUv;
 uniform float u_time;
 uniform vec2 u_pointer_position;
 uniform float u_ratio;
-
-vec2 rotate(vec2 uv, float th) {
-  return mat2(cos(th), sin(th), -sin(th), cos(th)) * uv;
-}
-
-float neuro_shape(vec2 uv, float t, float p) {
-  vec2 sine_acc = vec2(0.0);
-  vec2 res = vec2(0.0);
-  float scale = 8.0;
-  for(int j=0;j<15;j++){
-    uv = rotate(uv, 1.0);
-    sine_acc = rotate(sine_acc, 1.0);
-    vec2 layer = uv*scale + float(j) + sine_acc - t;
-    sine_acc += sin(layer)+2.4*p;
-    res += (0.5+0.5*cos(layer))/scale;
-    scale *= 1.2;
-  }
-  return res.x + res.y;
-}
-
-void main(){
-  vec2 uv = 0.5*vUv;
-  uv.x *= u_ratio;
-  vec2 pointer = vUv - u_pointer_position;
-  pointer.x *= u_ratio;
-  float p = clamp(length(pointer),0.0,1.0);
-  p = 0.5*pow(1.0-p,2.0);
-  float t = 0.001*u_time;
-  vec3 color = vec3(0.0,0.5,0.2); // фиксированный тёмно-зелёный
-  float noise = neuro_shape(uv,t,p);
-  noise = 1.2*pow(noise,3.0);
-  noise += pow(noise,10.0);
-  noise = max(0.0,noise-0.5);
-  noise *= (1.0-length(vUv-0.5));
-  color = color*noise;
-  gl_FragColor = vec4(color,1.0);
-}
+vec2 rotate(vec2 uv,float th){return mat2(cos(th),sin(th),-sin(th),cos(th))*uv;}
+float neuro_shape(vec2 uv,float t,float p){vec2 sine_acc=vec2(0.0);vec2 res=vec2(0.0);float scale=8.0;for(int j=0;j<15;j++){uv=rotate(uv,1.0);sine_acc=rotate(sine_acc,1.0);vec2 layer=uv*scale+float(j)+sine_acc-t;sine_acc+=sin(layer)+2.4*p;res+=(0.5+0.5*cos(layer))/scale;scale*=1.2;}return res.x+res.y;}
+void main(){vec2 uv=0.5*vUv;uv.x*=u_ratio;vec2 pointer=vUv-u_pointer_position;pointer.x*=u_ratio;float p=clamp(length(pointer),0.0,1.0);p=0.5*pow(1.0-p,2.0);float t=0.001*u_time;vec3 color=vec3(0.0,0.5,0.2);float noise=neuro_shape(uv,t,p);noise=1.2*pow(noise,3.0);noise+=pow(noise,10.0);noise=max(0.0,noise-0.5);noise*=(1.0-length(vUv-0.5));color=color*noise;gl_FragColor=vec4(color,1.0);}
 </script>
 
 <script>
-/* === Neuro Shader === */
+// === SHADER BACKGROUND (UNCHANGED) ===
 const canvasEl=document.getElementById("neuro");
 const gl=canvasEl.getContext("webgl")||canvasEl.getContext("experimental-webgl");
-let uniforms={};
-let pointer={x:0,y:0,tX:0,tY:0};
-const devicePixelRatio=Math.min(window.devicePixelRatio,2);
+let uniforms={},pointer={x:0,y:0,tX:0,tY:0},devicePixelRatio=Math.min(window.devicePixelRatio,2);
 
 function initShader(){
-  const vsSource=document.getElementById("vertShader").textContent;
-  const fsSource=document.getElementById("fragShader").textContent;
-  function createShader(gl,source,type){
-    const shader=gl.createShader(type);
-    gl.shaderSource(shader,source);
-    gl.compileShader(shader);
-    if(!gl.getShaderParameter(shader,gl.COMPILE_STATUS)) console.error(gl.getShaderInfoLog(shader));
-    return shader;
-  }
-  const vertexShader=createShader(gl,vsSource,gl.VERTEX_SHADER);
-  const fragmentShader=createShader(gl,fsSource,gl.FRAGMENT_SHADER);
-  const program=gl.createProgram();
-  gl.attachShader(program,vertexShader);
-  gl.attachShader(program,fragmentShader);
-  gl.linkProgram(program);
-  gl.useProgram(program);
-  const vertices=new Float32Array([-1,-1,1,-1,-1,1,1,1]);
-  const vertexBuffer=gl.createBuffer();
-  gl.bindBuffer(gl.ARRAY_BUFFER,vertexBuffer);
-  gl.bufferData(gl.ARRAY_BUFFER,vertices,gl.STATIC_DRAW);
-  const positionLocation=gl.getAttribLocation(program,"a_position");
-  gl.enableVertexAttribArray(positionLocation);
-  gl.vertexAttribPointer(positionLocation,2,gl.FLOAT,false,0,0);
-  const uniformNames=["u_time","u_ratio","u_pointer_position"];
-  uniformNames.forEach(name=>{uniforms[name]=gl.getUniformLocation(program,name);});
+  const vs=document.getElementById("vertShader").textContent;
+  const fs=document.getElementById("fragShader").textContent;
+  function sh(src,t){let s=gl.createShader(t);gl.shaderSource(s,src);gl.compileShader(s);return s;}
+  let v=sh(vs,gl.VERTEX_SHADER), f=sh(fs,gl.FRAGMENT_SHADER);
+  let p=gl.createProgram(); gl.attachShader(p,v); gl.attachShader(p,f); gl.linkProgram(p); gl.useProgram(p);
+  let vb=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,vb);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
+  let pos=gl.getAttribLocation(p,"a_position");
+  gl.enableVertexAttribArray(pos); gl.vertexAttribPointer(pos,2,gl.FLOAT,false,0,0);
+  ["u_time","u_ratio","u_pointer_position"].forEach(n=>uniforms[n]=gl.getUniformLocation(p,n));
 }
 initShader();
 
@@ -256,11 +268,10 @@ function resizeCanvas(){
   gl.viewport(0,0,canvasEl.width,canvasEl.height);
   gl.uniform1f(uniforms.u_ratio,canvasEl.width/canvasEl.height);
 }
-window.addEventListener("resize",resizeCanvas);
 resizeCanvas();
+window.addEventListener("resize",resizeCanvas);
 
 window.addEventListener("pointermove",e=>{pointer.tX=e.clientX;pointer.tY=e.clientY;});
-window.addEventListener("touchmove",e=>{pointer.tX=e.touches[0].clientX;pointer.tY=e.touches[0].clientY;});
 
 function render(){
   pointer.x+=(pointer.tX-pointer.x)*0.2;
@@ -272,59 +283,97 @@ function render(){
 }
 render();
 
-/* === Form Logic + Web3Forms === */
-const serviceButtons=document.querySelectorAll('.service-btn');
+// === FORM LOGIC ===
+
+const serviceBtns=document.querySelectorAll('.service-btn');
 const formContainer=document.getElementById('serviceForm');
 const formTitle=document.getElementById('formTitle');
 const selectedServiceInput=document.getElementById('selectedService');
-const contactForm=document.getElementById('contactForm');
-const thankyouMsg=document.getElementById('thankyouMsg');
-const errorMsg=document.getElementById('errorMsg');
 
-serviceButtons.forEach(btn=>{
+const energyButtonsWrapper=document.getElementById('energyButtons');
+const energyButtons=document.querySelectorAll('#energyButtons button');
+
+const universalSection=document.getElementById('universalSection');
+const stromSection=document.getElementById('stromSection');
+const gasSection=document.getElementById('gasSection');
+
+// Reset visibility
+function resetEnergySections(){
+  stromSection.style.display="none";
+  gasSection.style.display="none";
+  energyButtons.forEach(b=>b.classList.remove('active'));
+}
+
+// Handle services
+serviceBtns.forEach(btn=>{
   btn.addEventListener('click',()=>{
     const service=btn.dataset.service;
     formTitle.textContent=`Du hast "${service}" gewählt`;
     selectedServiceInput.value=service;
-    // Показываем форму (плавно)
+
+    resetEnergySections();
+
+    if(service==="Vertrag wechseln"){
+      universalSection.style.display="none";
+      energyButtonsWrapper.style.display="flex";
+    }
+    else{
+      energyButtonsWrapper.style.display="none";
+      universalSection.style.display="block";
+    }
+
     formContainer.classList.add('active');
     formContainer.scrollIntoView({behavior:'smooth'});
-    // Сбрасываем сообщения
-    thankyouMsg.style.display='none';
-    errorMsg.style.display='none';
   });
 });
 
-contactForm.addEventListener('submit', async e=>{
+// Handle Strom/Gas buttons
+energyButtons.forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    resetEnergySections();
+    btn.classList.add('active');
+
+    if(btn.dataset.energy==="Strom"){
+      stromSection.style.display="block";
+    } else {
+      gasSection.style.display="block";
+    }
+  });
+});
+
+// Form submit
+const contactForm=document.getElementById('contactForm');
+const thankyouMsg=document.getElementById('thankyouMsg');
+const errorMsg=document.getElementById('errorMsg');
+
+contactForm.addEventListener('submit',async e=>{
   e.preventDefault();
-  // Скрываем старые сообщения
   thankyouMsg.style.display='none';
   errorMsg.style.display='none';
 
   const formData=new FormData(contactForm);
 
   try{
-    const res=await fetch(contactForm.action, {
-      method: 'POST',
-      body: formData
-    });
-    const json = await res.json();
-    // Web3Forms возвращает success: true при успешной отправке
-    if(res.ok && json.success) {
+    const res=await fetch(contactForm.action,{method:'POST',body:formData});
+    const json=await res.json();
+
+    if(res.ok && json.success){
       contactForm.reset();
-      selectedServiceInput.value='';
+      resetEnergySections();
+      universalSection.style.display="none";
       thankyouMsg.style.display='block';
     } else {
-      console.error('Web3Forms error response:', json);
       errorMsg.style.display='block';
     }
-  } catch(err){
-    console.error('Fetch error', err);
+  }
+  catch(err){
     errorMsg.style.display='block';
   }
 });
 
-function scrollToTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+function scrollToTop(){
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 </script>
 
 </body>

@@ -5,14 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Service Selection</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+
+*{
+margin:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
 
 body{
 background:#151912;
 color:#FFF6F7;
 line-height:1.5;
 overflow-x:hidden;
-
 }
 
 header{
@@ -23,7 +27,6 @@ padding:1rem 2rem;
 background:#10120f;
 position:fixed;width:100%;
 top:0;z-index:100;
-
 }
 
 header button{
@@ -32,7 +35,6 @@ border:none;
 color:#FFF6F7;
 font-size:1.5rem;
 cursor:pointer;
-
 }
 
 main{
@@ -40,7 +42,6 @@ display:flex;
 flex-direction:column;
 align-items:center;
 padding-top:80px;
-
 }
 
 .section{
@@ -52,13 +53,15 @@ align-items:center;
 flex-direction:column;
 text-align:center;
 padding:2rem;
-
 }
 
-.services {
-  flex-direction: column;
-}
 
+.services {      
+  flex-direction:column;
+  gap:1rem;
+  justify-content:center;
+  align-items:center;
+}
 
 .service-btn{
 background:#28a745;
@@ -70,13 +73,11 @@ cursor:pointer;
 border-radius:8px;
 position:relative;
 z-index:10;
-
 }
 
 .service-btn:hover{
 background:#28a745;
 color:#FFF6F7;
-
 }
 
 .form-container{
@@ -93,109 +94,67 @@ transform:translateY(20px);
 pointer-events:none;
 transition:opacity 0.6s ease,transform 0.6s ease;
 position:relative;z-index:10;
-
 }
+
 .form-container.active{opacity:1;transform:translateY(0);pointer-events:auto;}
 .form-container input,.form-container select,.form-container textarea{width:100%;padding:0.8rem;margin-bottom:1rem;border:none;border-radius:6px;font-size:1rem;background:#111310;color:#fff;}
-.form-container label{color:#cfcfcf;font-size:0.9rem;margin-bottom:0.2rem;display:block;}
+
+.form-container label{
+color:#cfcfcf;
+font-size:0.9rem;
+margin-bottom:0.2rem;
+display:block;
+margin-bottom: 15px;
+}
+
 .form-container button{background:#28a745;color:#FFF6F7;border:none;padding:1rem;border-radius:6px;cursor:pointer;font-size:1rem;}
 .form-container button:hover{background:#28a745;color:#FFF6F7;}
 .thankyou{display:none;margin-top:1rem;color:rgb(160,255,255);}
 .info{margin-top:4rem;max-width:800px;text-align:center;color:#cfcfcf;}
-@media(max-width:600px){.services{flex-direction:column;gap:0.8rem;}.service-btn{width:30%;}}
-/* --- NEON CYBER SLIDERS --- */
 
-.slider-container input[type="range"] {
-  -webkit-appearance: none;
-  width: 100%;
-  height: 10px;
-  border-radius: 5px;
-  background: linear-gradient(90deg, #26c34a 0%, #21373b 100%);
-  outline: none;
-  position: relative;
-  transition: background 0.3s ease;
+@media(max-width:600px){
+  .services{flex-direction:column;gap:0.8rem;}
+  .service-btn{width:30%;}
 }
 
-/* Firefox */
-.slider-container input[type="range"]::-moz-range-track {
-  height: 10px;
-  background: linear-gradient(90deg, #28a745 0%, #1d331f 100%);
-  border-radius: 5px;
+.input-row {
+  align-items:center;
+  gap:10px;
+  margin-bottom:15px;
 }
 
-/* GLOW ACTIVATING */
-.slider-container input[type="range"]:active {
-  filter: drop-shadow(0 0 6px #28ff6f);
+.input-row img {
+  width:24px;
+  height:24px;
+  opacity:0.9;
+  margin-top: 20px;
 }
 
-/* Chrome / Edge / Safari */
-.slider-container input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 22px;
-  height: 22px;
-  background: #fff6f7;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow:
-    0 0 10px #28ff6f,
-    0 0 20px #28ff6f,
-    inset 0 0 5px #0f3;
-  transition: transform 0.15s ease, box-shadow 0.3s ease;
+.input-mini {
+  width:80px !important;
+  padding:0.6rem !important;
+  text-align:center;
 }
 
-/* Firefox thumb */
-.slider-container input[type="range"]::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
-  background: #28ff6f;
-  border-radius: 50%;
-  cursor: pointer;
-  box-shadow:
-    0 0 10px #28ff6f,
-    0 0 20px #28ff6f,
-    inset 0 0 5px #0f3;
-  transition: transform 0.15s ease, box-shadow 0.3s ease;
+.input-unit {
+  color:#cfcfcf;
+  font-size:0.9rem;
 }
 
-/* Hover glow */
-.slider-container input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.15);
-  box-shadow:
-    0 0 12px #28ff6f,
-    0 0 25px #28ff6f,
-    inset 0 0 8px #0f5;
-}
 
-.slider-container input[type="range"]::-moz-range-thumb:hover {
-  transform: scale(1.15);
-  box-shadow:
-    0 0 12px #fff6f7,
-    0 0 25px #28ff6f,
-    inset 0 0 8px #0f5;
-}
-
-/* Active glow */
-.slider-container input[type="range"]::-webkit-slider-thumb:active {
-  transform: scale(1.25);
-  box-shadow:
-    0 0 20px #28ff6f,
-    0 0 35px #28ff6f,
-    inset 0 0 10px #0f5;
-}
-
-.slider-container input[type="range"]::-moz-range-thumb:active {
-  transform: scale(1.25);
-  box-shadow:
-    0 0 20px #28ff6f,
-    0 0 35px #28ff6f,
-    inset 0 0 10px #0f5;
-}
 .energy-buttons{display:flex;gap:1rem;margin:1rem 0;justify-content:center;}
 .energy-buttons button{flex:1;padding:0.8rem;font-size:1rem;border-radius:6px;border:none;background:#28a745;color:#FFF6F7;cursor:pointer;}
 .energy-buttons button.active{background:#FFF6F7;color:#28a745;}
+
 .energy-section{display:none;margin-bottom:1rem;}
-canvas#neuro{position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;}
+
+canvas#neuro{
+position: fixed;
+top: 0; left: 0;
+width: 100%; height: 100%;
+pointer-events: none;
+z-index: -1;
+}
 </style>
 </head>
 
@@ -210,18 +169,20 @@ canvas#neuro{position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointe
 <main>
 <section class="section hero">
   <h1>Wähle eine Dienstleistung</h1>
+
   <div class="services">
     <button class="service-btn" data-service="Vertrag wechseln">Vertrag wechseln</button>
     <button class="service-btn" data-service="Umzug">Umzug</button>
     <button class="service-btn" data-service="Neueinzug">Neueinzug</button>
   </div>
+
 </section>
 
 <section class="section form-section">
 <div class="form-container" id="serviceForm">
   <h2 id="formTitle">Dienstleistung auswählen</h2>
 
-  <!-- Strom/Gas buttons (between title and name, as requested) -->
+  <!-- Strom/Gas buttons -->
   <div class="energy-buttons" id="energyButtons" style="display:none;">
     <button type="button" data-energy="Strom">Strom</button>
     <button type="button" data-energy="Gas">Gas</button>
@@ -229,41 +190,42 @@ canvas#neuro{position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointe
 
   <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
 
-    <!-- Universal Bewohner (Umzug + Neueinzug) -->
+    <!-- Universal Bewohner -->
     <div class="universal-section" id="universalSection" style="display:none;">
-      <div class="slider-container">
-        <label>Zahl von Bewohner:</label>
-        <input type="range" id="universalBewohner" name="universalBewohner" min="1" max="10" value="1" oninput="universalOutput.value=this.value">
-        <output id="universalOutput">1</output>
+      <label>Zahl von Bewohner:</label>
+      <div class="input-row">
+        <img src="person.svg">
+        <input type="number" class="input-mini" name="universalBewohner" min="1" max="10" value="1">
       </div>
     </div>
 
     <!-- Strom Section -->
     <div class="energy-section" id="stromSection">
-      <div class="slider-container">
-        <label>Zahl von Bewohner (Strom):</label>
-        <input type="range" name="stromBewohner" min="1" max="10" value="1" oninput="stromOutput.value=this.value">
-        <output id="stromOutput">1</output>
+      <label>Zahl von Bewohner (Strom):</label>
+      <div class="input-row">
+        <img src="person.svg">
+        <input type="number" class="input-mini" name="stromBewohner" min="1" max="10" value="1">
       </div>
-      <div class="slider-container">
-        <label>Verbrauch kWh/Jahr (Strom):</label>
-        <input type="range" name="stromVerbrauch" min="1000" max="20000" step="500" value="2000" oninput="stromVerbrauchOutput.value=this.value">
-        <output id="stromVerbrauchOutput">2000</output>
+
+      <label>Verbrauch (Strom):</label>
+      <div class="input-row">
+        <input type="number" class="input-mini" name="stromVerbrauch" min="500" max="30000" step="100" value="2000">
+        <span class="input-unit">kWh/Jahr</span>
       </div>
     </div>
 
     <!-- Gas Section -->
     <div class="energy-section" id="gasSection">
-      <div class="slider-container">
-        <label>Zahl von Bewohner (Gas):</label>
-        <input type="range" name="gasBewohner" min="1" max="10" value="1" oninput="gasOutput.value=this.value">
-        <output id="gasOutput">1</output>
+      <label>Zahl von Bewohner (Gas):</label>
+      <div class="input-row">
+        <img src="person.svg">
+        <input type="number" class="input-mini" name="gasBewohner" min="1" max="10" value="1">
       </div>
 
-      <div class="slider-container">
-        <label>Verbrauch kWh/Jahr (Gas):</label>
-        <input type="range" name="gasVerbrauch" min="1000" max="20000" step="500" value="2000" oninput="gasVerbrauchOutput.value=this.value">
-        <output id="gasVerbrauchOutput">2000</output>
+      <label>Verbrauch (Gas):</label>
+      <div class="input-row">
+        <input type="number" class="input-mini" name="gasVerbrauch" min="500" max="30000" step="100" value="2000">
+        <span class="input-unit">kWh/Jahr</span>
       </div>
     </div>
 
@@ -288,22 +250,23 @@ canvas#neuro{position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointe
     </select>
 
     <input type="hidden" name="service" id="selectedService" value="">
-
     <button type="submit">Absenden</button>
   </form>
 
   <div class="thankyou" id="thankyouMsg">Danke! Wir werden uns bald bei dir melden.</div>
   <div class="thankyou" id="errorMsg" style="display:none; color:#ff8b8b;">Fehler beim Senden. Bitte versuche es erneut.</div>
+
 </div>
 </section>
 
 <section class="section info">
   <h2>Über Uns</h2>
-  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce et lorem nec libero efficitur varius.</p>
+  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 </section>
 </main>
 
 
+<!-- SHADERS -->
 <script type="x-shader/x-vertex" id="vertShader">
 precision mediump float;
 attribute vec2 a_position;
@@ -318,12 +281,40 @@ uniform float u_time;
 uniform vec2 u_pointer_position;
 uniform float u_ratio;
 vec2 rotate(vec2 uv,float th){return mat2(cos(th),sin(th),-sin(th),cos(th))*uv;}
-float neuro_shape(vec2 uv,float t,float p){vec2 sine_acc=vec2(0.0);vec2 res=vec2(0.0);float scale=8.0;for(int j=0;j<15;j++){uv=rotate(uv,1.0);sine_acc=rotate(sine_acc,1.0);vec2 layer=uv*scale+float(j)+sine_acc-t;sine_acc+=sin(layer)+2.4*p;res+=(0.5+0.5*cos(layer))/scale;scale*=1.2;}return res.x+res.y;}
-void main(){vec2 uv=0.5*vUv;uv.x*=u_ratio;vec2 pointer=vUv-u_pointer_position;pointer.x*=u_ratio;float p=clamp(length(pointer),0.0,1.0);p=0.5*pow(1.0-p,2.0);float t=0.001*u_time;vec3 color=vec3(0.0,0.5,0.2);float noise=neuro_shape(uv,t,p);noise=1.2*pow(noise,3.0);noise+=pow(noise,10.0);noise=max(0.0,noise-0.5);noise*=(1.0-length(vUv-0.5));color=color*noise;gl_FragColor=vec4(color,1.0);}
+float neuro_shape(vec2 uv,float t,float p){
+vec2 sine_acc=vec2(0.0);
+vec2 res=vec2(0.0);
+float scale=8.0;
+for(int j=0;j<15;j++){
+uv=rotate(uv,1.0);
+sine_acc=rotate(sine_acc,1.0);
+vec2 layer=uv*scale+float(j)+sine_acc-t;
+sine_acc+=sin(layer)+2.4*p;
+res+=(0.5+0.5*cos(layer))/scale;
+scale*=1.2;}
+return res.x+res.y;
+}
+void main(){
+vec2 uv=0.5*vUv;
+uv.x*=u_ratio;
+vec2 pointer=vUv-u_pointer_position;
+pointer.x*=u_ratio;
+float p=clamp(length(pointer),0.0,1.0);
+p=0.5*pow(1.0-p,2.0);
+float t=0.001*u_time;
+vec3 color=vec3(0.0,0.5,0.2);
+float noise=neuro_shape(uv,t,p);
+noise=1.2*pow(noise,3.0);
+noise+=pow(noise,10.0);
+noise=max(0.0,noise-0.5);
+noise*=(1.0-length(vUv-0.5));
+color=color*noise;
+gl_FragColor=vec4(color,1.0);
+}
 </script>
 
 <script>
-
+/* ---- WebGL background ---- */
 const canvasEl=document.getElementById("neuro");
 const gl=canvasEl.getContext("webgl")||canvasEl.getContext("experimental-webgl");
 let uniforms={},pointer={x:0,y:0,tX:0,tY:0},devicePixelRatio=Math.min(window.devicePixelRatio,2);
@@ -351,19 +342,22 @@ function resizeCanvas(){
 resizeCanvas();
 window.addEventListener("resize",resizeCanvas);
 
-window.addEventListener("pointermove",e=>{pointer.tX=e.clientX;pointer.tY=e.clientY;});
+window.addEventListener("pointermove",e=>{
+pointer.tX=e.clientX;
+pointer.tY=e.clientY;
+});
 
 function render(){
-  pointer.x+=(pointer.tX-pointer.x)*0.2;
-  pointer.y+=(pointer.tY-pointer.y)*0.2;
-  gl.uniform1f(uniforms.u_time,performance.now());
-  gl.uniform2f(uniforms.u_pointer_position,pointer.x/window.innerWidth,1-pointer.y/window.innerHeight);
-  gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
-  requestAnimationFrame(render);
+pointer.x+=(pointer.tX-pointer.x)*0.2;
+pointer.y+=(pointer.tY-pointer.y)*0.2;
+gl.uniform1f(uniforms.u_time,performance.now());
+gl.uniform2f(uniforms.u_pointer_position,pointer.x/window.innerWidth,1-pointer.y/window.innerHeight);
+gl.drawArrays(gl.TRIANGLE_STRIP,0,4);
+requestAnimationFrame(render);
 }
 render();
 
-
+/* ---- UI logic ---- */
 
 const serviceBtns=document.querySelectorAll('.service-btn');
 const formContainer=document.getElementById('serviceForm');
@@ -377,27 +371,23 @@ const universalSection=document.getElementById('universalSection');
 const stromSection=document.getElementById('stromSection');
 const gasSection=document.getElementById('gasSection');
 
-// Reset visibility
 function resetEnergySections(){
   stromSection.style.display="none";
   gasSection.style.display="none";
   energyButtons.forEach(b=>b.classList.remove('active'));
 }
 
-// Handle services
 serviceBtns.forEach(btn=>{
   btn.addEventListener('click',()=>{
     const service=btn.dataset.service;
     formTitle.textContent=`Du hast "${service}" gewählt`;
     selectedServiceInput.value=service;
-
     resetEnergySections();
 
     if(service==="Vertrag wechseln"){
       universalSection.style.display="none";
       energyButtonsWrapper.style.display="flex";
-    }
-    else{
+    } else {
       energyButtonsWrapper.style.display="none";
       universalSection.style.display="block";
     }
@@ -407,7 +397,6 @@ serviceBtns.forEach(btn=>{
   });
 });
 
-// Handle Strom/Gas buttons
 energyButtons.forEach(btn=>{
   btn.addEventListener('click',()=>{
     resetEnergySections();
@@ -421,7 +410,6 @@ energyButtons.forEach(btn=>{
   });
 });
 
-// Form submit
 const contactForm=document.getElementById('contactForm');
 const thankyouMsg=document.getElementById('thankyouMsg');
 const errorMsg=document.getElementById('errorMsg');
